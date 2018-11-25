@@ -22,9 +22,9 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('employee', 'EmployeeController@getAllEmployee');
     Route::get('employee/{id}', 'EmployeeController@searchEmployee');
-    Route::post('addemployee', 'EmployeeController@createEmployee');
-    Route::post('updateemployee', 'EmployeeController@updateEmployee');
-    Route::post('deleteemployee/{id}', 'EmployeeController@deleteEmployee');
+    Route::post('employee/add', 'EmployeeController@createEmployee');
+    Route::post('employee/update', 'EmployeeController@updateEmployee');
+    Route::post('employee/delete', 'EmployeeController@deleteEmployee');
 });
 
 

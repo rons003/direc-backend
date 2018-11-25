@@ -12,7 +12,10 @@ class EmployeeController extends Controller
     public function getAllEmployee()
     {
         $employee = Employee::all();
-        return response()->json($employee);
+        return json_encode([
+            'result' => 'success',
+            'employee' => $employee
+        ]);
     }
 
     /**
@@ -22,7 +25,10 @@ class EmployeeController extends Controller
     {
         $employee = Employee::find($id);
 
-        return response()->json($employee);
+        return json_encode([
+            'result' => 'success',
+            'employee' => $employee
+        ]);
     }
 
     /**
@@ -30,18 +36,19 @@ class EmployeeController extends Controller
      */
     public function createEmployee(Request $request)
     {
-        $employee = new Employee;
+        $newEmployee = Employee::create($request->all());
 
-        $employee->lastname = $request['lastname'];
-        $employee->firstname = $request['firstname'];
-        $employee->middlename = $request['middlename'];
-        $employee->lastname = $request['contact_number'];
-        $employee->email = $request['email'];
-        $employee->address = $request['address'];
-        $employee->gender = $request['gender'];
-        $employee->national = $request['national'];
-
-        $employee-save();
+        if($newEmployee){
+            return json_encode([
+                'result' => 'success',
+                'message' => 'Successfully Added!'
+            ]);
+        } else {
+            return json_encode([
+                'result' => 'failed',
+                'message' => 'Not Successfully!'
+            ]);
+        }
     }
 
     /**
@@ -49,25 +56,33 @@ class EmployeeController extends Controller
      */
     public function updateEmployee(Request $request)
     {
-        $employee = Employee::find($request['id']);
-
-        $employee->lastname = $request['lastname'];
-        $employee->firstname = $request['firstname'];
-        $employee->middlename = $request['middlename'];
-        $employee->lastname = $request['contact_number'];
-        $employee->email = $request['email'];
-        $employee->address = $request['address'];
-        $employee->gender = $request['gender'];
-        $employee->national = $request['national'];
+        $updateEmployee = Employee::where('id', $request['id'])->update($request->except('_token'));
         
-        $employee-save();
+        if($updateEmployee){
+            return json_encode([
+                'result' => 'success',
+                'message' => 'Employee successfully Updated'
+            ]);
+        } else {
+            return json_encode([
+                'result' => 'failed',
+                'message' => 'Not Successfully!'
+            ]);
+        }
     }
 
     /**
      * Deleting Employee
      */
-    public function deleteEmployee($id)
+    public function deleteEmployee(Request $request)
     {
-        $deleted = Employee::destroy($id);
+        $employee_id_array = $request->input('id');
+        $delete_employee = Employee::where('id', $employee_id_array)->delete();
+        if($delete_employee){
+			return json_encode([
+                'result' => 'success',
+                 'message' => 'Employee successfully deleted.'
+                ]);
+		}
     }
 }
