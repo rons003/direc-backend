@@ -16,8 +16,8 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::post('login', 'UserController@login');
-Route::post('register', 'UserController@register');
+// Route::post('login', 'UserController@login');
+// Route::post('register', 'UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('employee', 'EmployeeController@getAllEmployee');
@@ -26,4 +26,5 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('updateemployee', 'EmployeeController@updateEmployee');
     Route::post('deleteemployee/{id}', 'EmployeeController@deleteEmployee');
 });
+
 
