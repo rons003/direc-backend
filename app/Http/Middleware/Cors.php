@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class Admin
+class Cors
 {
     /**
      * Handle an incoming request.
@@ -16,6 +15,8 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
+        header('Access-Control-Allow-Origin : *');
+        header('Access-Control-Allow-Headers: Origin, Content-Type');
         return $next($request);
     }
 }
